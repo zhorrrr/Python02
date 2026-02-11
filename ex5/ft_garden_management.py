@@ -18,30 +18,26 @@ class GardenManager:
         self.plants = []
         self.water_tank = 100
     
+    def validate_water_level(self, water_level):
+        try:
+            if water_level < 1 or water_level > 10:
+                raise InvalidPlantError(f"Water level {water_level} is invalid (must be 1-10)")
+        except TypeError:
+            raise InvalidPlantError("Water level must be a number!")
+    
+    def validate_sunlight_hours(self, sunlight_hours):
+        try:
+            if sunlight_hours < 2 or sunlight_hours > 12:
+                raise InvalidPlantError(f"Sunlight hours {sunlight_hours} is invalid (must be 2-12)")
+        except TypeError:
+            raise InvalidPlantError("Sunlight hours must be a number!")
+    
     def add_plant(self, name, water_level, sunlight_hours):
         if name is None or name == "":
             raise InvalidPlantError("Plant name cannot be empty!")
         
-        if not isinstance(name, str):
-            raise InvalidPlantError("Plant name must be a string!")
-        
-        if water_level is None:
-            raise InvalidPlantError("Water level cannot be None!")
-        
-        if not isinstance(water_level, (int, float)):
-            raise InvalidPlantError("Water level must be a number!")
-        
-        if sunlight_hours is None:
-            raise InvalidPlantError("Sunlight hours cannot be None!")
-        
-        if not isinstance(sunlight_hours, (int, float)):
-            raise InvalidPlantError("Sunlight hours must be a number!")
-        
-        if water_level < 1 or water_level > 10:
-            raise InvalidPlantError(f"Water level {water_level} is invalid (must be 1-10)")
-        
-        if sunlight_hours < 2 or sunlight_hours > 12:
-            raise InvalidPlantError(f"Sunlight hours {sunlight_hours} is invalid (must be 2-12)")
+        self.validate_water_level(water_level)
+        self.validate_sunlight_hours(sunlight_hours)
         
         plant = Plant(name, water_level, sunlight_hours)
         self.plants = self.plants + [plant]
@@ -59,9 +55,6 @@ class GardenManager:
         if plant_name is None or plant_name == "":
             raise InvalidPlantError("Plant name cannot be empty!")
         
-        if not isinstance(plant_name, str):
-            raise InvalidPlantError("Plant name must be a string!")
-        
         plant = None
         for p in self.plants:
             if p.name == plant_name:
@@ -74,26 +67,20 @@ class GardenManager:
         water = plant.water_level
         sun = plant.sunlight_hours
 
-        if water < 1 or water > 10:
-            raise InvalidPlantError(f"Water level {water} is too high (max 10)")
-        
-        if sun < 2 or sun > 12:
-            raise InvalidPlantError(f"Sunlight hours {sun} is invalid (must be 2-12)")
+        self.validate_water_level(water)
+        self.validate_sunlight_hours(sun)
         
         print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
     
     def use_water(self, amount):
-        if amount is None:
-            raise WaterTankError("Amount cannot be None!")
-        
-        if not isinstance(amount, (int, float)):
+        try:
+            if amount < 0:
+                raise WaterTankError("Amount cannot be negative!")
+            
+            if amount > self.water_tank:
+                raise WaterTankError("Not enough water in tank")
+        except TypeError:
             raise WaterTankError("Amount must be a number!")
-        
-        if amount < 0:
-            raise WaterTankError("Amount cannot be negative!")
-        
-        if amount > self.water_tank:
-            raise WaterTankError("Not enough water in tank")
         self.water_tank = self.water_tank - amount
         print(f"Used {amount} liters of water")
 
@@ -126,8 +113,8 @@ def test_garden_management():
     print("\nTesting error recovery...")
     try:
         garden.use_water(150)
-    except GardenError as error:
-        print(f"Caught GardenError: {error}")
+    except WaterTankError as error:
+        print(f"Caught WaterTankError: {error}")
         print("System recovered and continuing...")
     
     print("\nGarden management system test complete!")
