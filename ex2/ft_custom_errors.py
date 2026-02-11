@@ -7,17 +7,17 @@ class PlantError(GardenError):
 class WaterError(GardenError):
     pass
 
-def check_plant(plant: str):
+def check_plant(plant: str) -> None:
     if plant == "":
         raise PlantError("Plant name cannot be empty!")
     print(f"Plant '{plant}' is healthy!")
 
-def check_water(water_amount: int):
+def check_water(water_amount: int) -> None:
     if water_amount < 0:
         raise WaterError("Water amount cannot be negative!")
     print(f"Water amount {water_amount}ml is sufficient!")
 
-def test_errors():
+def test_errors() -> None:
     print("Testing PlantError...")
     try:
         check_plant("")
@@ -37,7 +37,7 @@ def test_errors():
     except GardenError:
         print("Caught PlantError via GardenError parent!\n")
 
-def ft_custom_errors():
+def ft_custom_errors() -> None:
     print("=== Custom Garden Errors Demo ===\n")
     test_errors()
     print("\nAll tests completed - program didn't crash!")
