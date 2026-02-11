@@ -27,7 +27,7 @@ def test_errors() -> None:
 
     print("Testing WaterError...")
     try:
-        check_water(12)
+        check_water(-5)
     except WaterError:
         print("Caught WaterError: Water amount cannot be negative!\n")
     
