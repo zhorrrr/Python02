@@ -1,3 +1,5 @@
+from typing import List
+
 class GardenError(Exception):
     pass
 
@@ -8,31 +10,31 @@ class WaterTankError(GardenError):
     pass
 
 class Plant:
-    def __init__(self, name, water_level, sunlight_hours):
-        self.name = name
-        self.water_level = water_level
-        self.sunlight_hours = sunlight_hours
+    def __init__(self, name: str, water_level: int, sunlight_hours: int) -> None:
+        self.name: str = name
+        self.water_level: int = water_level
+        self.sunlight_hours: int = sunlight_hours
 
 class GardenManager:
-    def __init__(self):
-        self.plants = []
-        self.water_tank = 100
+    def __init__(self) -> None:
+        self.plants: List[Plant] = []
+        self.water_tank: int = 100
     
-    def validate_water_level(self, water_level):
+    def validate_water_level(self, water_level: int) -> None:
         try:
             if water_level < 1 or water_level > 10:
                 raise InvalidPlantError(f"Water level {water_level} is invalid (must be 1-10)")
         except TypeError:
             raise InvalidPlantError("Water level must be a number!")
     
-    def validate_sunlight_hours(self, sunlight_hours):
+    def validate_sunlight_hours(self, sunlight_hours: int) -> None:
         try:
             if sunlight_hours < 2 or sunlight_hours > 12:
                 raise InvalidPlantError(f"Sunlight hours {sunlight_hours} is invalid (must be 2-12)")
         except TypeError:
             raise InvalidPlantError("Sunlight hours must be a number!")
     
-    def add_plant(self, name, water_level, sunlight_hours):
+    def add_plant(self, name: str, water_level: int, sunlight_hours: int) -> None:
         if name is None or name == "":
             raise InvalidPlantError("Plant name cannot be empty!")
         
@@ -43,7 +45,7 @@ class GardenManager:
         self.plants = self.plants + [plant]
         print(f"Added {name} successfully")
     
-    def water_plants(self):
+    def water_plants(self) -> None:
         try:
             print("Opening watering system")
             for plant in self.plants:
@@ -51,7 +53,7 @@ class GardenManager:
         finally:
             print("Closing watering system (cleanup)")
     
-    def check_plant_health(self, plant_name):
+    def check_plant_health(self, plant_name: str) -> None:
         if plant_name is None or plant_name == "":
             raise InvalidPlantError("Plant name cannot be empty!")
         
@@ -72,7 +74,7 @@ class GardenManager:
         
         print(f"{plant_name}: healthy (water: {water}, sun: {sun})")
     
-    def use_water(self, amount):
+    def use_water(self, amount: int) -> None:
         try:
             if amount < 0:
                 raise WaterTankError("Amount cannot be negative!")
@@ -84,7 +86,7 @@ class GardenManager:
         self.water_tank = self.water_tank - amount
         print(f"Used {amount} liters of water")
 
-def test_garden_management():
+def test_garden_management() -> None:
     print("=== Garden Management System ===\n")
     
     garden = GardenManager()

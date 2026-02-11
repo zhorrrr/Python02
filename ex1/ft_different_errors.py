@@ -1,4 +1,4 @@
-def garden_operations(error_type):
+def garden_operations(error_type: str) -> None:
     if error_type == "value":
         int("abc")
     elif error_type == "zero":
@@ -9,7 +9,7 @@ def garden_operations(error_type):
         plants = {"rose": 5}
         print(plants["orchid"])
 
-def test_error_types():
+def test_error_types() -> None:
     print("Testing ValueError...")
     try:
         garden_operations("value")
@@ -40,7 +40,7 @@ def test_error_types():
     except (ValueError, ZeroDivisionError, KeyError, FileNotFoundError):
         print("Caught an error, but program continues!")
     
-def ft_different_errors():
+def ft_different_errors() -> None:
     print("=== Garden Error Types Demo ===\n")
     test_error_types()
     print("\nAll tests completed - program didn't crash!")
