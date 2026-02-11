@@ -3,7 +3,7 @@ def check_plant_health(plant_name: str, water_level: int, sunlight_hours: int) -
         raise ValueError("Error: Plant name cannot be empty!")
     
     try:
-        if water_level < 0 or water_level > 10:
+        if water_level < 1 or water_level > 10:
             raise ValueError(f"Error: Water level {water_level} is too high (max 10)")
     except TypeError:
         raise ValueError("Error: Water level must be a number!")
