@@ -92,6 +92,13 @@ def test_garden_management():
     except PlantError as error:
         print(f"Error checking lettuce: {error}")
     
+    print("\nTesting error recovery...")
+    try:
+        raise WaterError("Not enough water in tank")
+    except GardenError as error:
+        print(f"Caught GardenError: {error}")
+        print("System recovered and continuing...")
+    
     print("\nGarden management system test complete!")
 
 if __name__ == "__main__":
