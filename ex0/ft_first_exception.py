@@ -1,4 +1,4 @@
-def check_temperature(temp_str):
+def check_temperature(temp_str: str) -> None:
     try:
         temp = int(temp_str)
     except ValueError:
@@ -16,7 +16,7 @@ def check_temperature(temp_str):
     print(f"Temperature {temp}°C is perfect for plants!\n")
     return temp
 
-def test_temperature_input():
+def test_temperature_input() -> None:
     print("=== Garden Temperature Checker ===\n")
     temperature = ["25", "abc", "100", "-50"]
     for temp_str in temperature:

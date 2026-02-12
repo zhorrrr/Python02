@@ -22,14 +22,18 @@ class GardenManager:
             raise PlantError("Plant name cannot be empty!")
         
         try:
-            if water_level < 1 or water_level > 10:
+            if water_level < 1:
+                raise PlantError(f"Water level {water_level} is too low (min 1)")
+            if water_level > 10:
                 raise PlantError(f"Water level {water_level} is too high (max 10)")
         except TypeError:
             raise PlantError("Water level must be a number!")
         
         try:
-            if sunlight_hours < 2 or sunlight_hours > 12:
-                raise PlantError(f"Sunlight hours {sunlight_hours} is invalid (must be 2-12)")
+            if sunlight_hours < 2:
+                raise PlantError(f"Sunlight hours {sunlight_hours} is too low (min 2)")
+            if sunlight_hours > 12:
+                raise PlantError(f"Sunlight hours {sunlight_hours} is too high (max 12)")
         except TypeError:
             raise PlantError("Sunlight hours must be a number!")
         
@@ -58,11 +62,15 @@ class GardenManager:
         if plant is None:
             raise PlantError(f"Plant '{plant_name}' not found in garden")
         
-        if plant.water_level < 1 or plant.water_level > 10:
+        if plant.water_level < 1:
+            raise PlantError(f"Water level {plant.water_level} is too low (min 1)")
+        if plant.water_level > 10:
             raise PlantError(f"Water level {plant.water_level} is too high (max 10)")
         
-        if plant.sunlight_hours < 2 or plant.sunlight_hours > 12:
-            raise PlantError(f"Sunlight hours {plant.sunlight_hours} is invalid (must be 2-12)")
+        if plant.sunlight_hours < 2:
+            raise PlantError(f"Sunlight hours {plant.sunlight_hours} is too low (min 2)")
+        if plant.sunlight_hours > 12:
+            raise PlantError(f"Sunlight hours {plant.sunlight_hours} is too high (max 12)")
         
         print(f"{plant_name}: healthy (water: {plant.water_level}, sun: {plant.sunlight_hours})")
 

@@ -3,14 +3,18 @@ def check_plant_health(plant_name: str, water_level: int, sunlight_hours: int) -
         raise ValueError("Error: Plant name cannot be empty!")
     
     try:
-        if water_level < 1 or water_level > 10:
+        if water_level < 1:
+            raise ValueError(f"Error: Water level {water_level} is too low (min 1)")
+        if water_level > 10:
             raise ValueError(f"Error: Water level {water_level} is too high (max 10)")
     except TypeError:
         raise ValueError("Error: Water level must be a number!")
     
     try:
-        if sunlight_hours < 2 or sunlight_hours > 12:
+        if sunlight_hours < 2:
             raise ValueError(f"Error: Sunlight hours {sunlight_hours} is too low (min 2)")
+        if sunlight_hours > 12:
+            raise ValueError(f"Error: Sunlight hours {sunlight_hours} is too high (max 12)")
     except TypeError:
         raise ValueError("Error: Sunlight hours must be a number!")
     
